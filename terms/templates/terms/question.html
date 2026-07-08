@@ -1,0 +1,92 @@
+{% extends "terms/base.html" %}
+{% block title %}問題 - FE-Output{% endblock %}
+{% block content %}
+  <header class="question-header">
+    <div class="question-header__left">
+      <span class="pill pill--blue">正答率{{ session_accuracy }}% {{ correct_answered }}問/{{ answered_count }}問中</span>
+    </div>
+    <h1 class="question-header__center app-title m-0 fs-2"><a href="{% url 'top' %}" class="app-title-link">FE-Output</a></h1>
+    <div class="question-header__right">
+      <span class="pill pill--pink">分野：{{ category_label }}</span>
+    </div>
+  </header>
+  <div class="question-meta">
+    <div class="question-meta__hint">
+      {% if hint_count > 0 and not show_next_button %}
+        ヒント：{{ hint }}
+      {% endif %}
+    </div>
+    <div class="question-meta__progress">問{{ current }} 残り{{ remaining }}問</div>
+  </div>
+  <div class="question-card">
+    <p class="question-text">{{ question.description }}</p>
+    {% if message %}
+      <div id="message"
+           class="question-message question-message--{{ message_type }}">{{ message }}</div>
+    {% endif %}
+    {% if not show_next_button %}
+      <form method="post">
+        {% csrf_token %}
+        <input type="text"
+               class="answer-input"
+               name="answer"
+               required
+               autofocus
+               autocomplete="off"
+               placeholder="用語を入力">
+        <div class="question-actions">
+          <button type="submit" class="btn-fe">回答</button>
+          <button id="hint-button"
+                  type="submit"
+                  class="btn-fe btn-fe--green"
+                  formaction="{% url 'show_hint' %}"
+                  formnovalidate>ヒント</button>
+        </div>
+        <p class="shortcut-hint">Alt + H でヒント / Enter で回答</p>
+      </form>
+    {% else %}
+      <form id="next-form" action="{% url 'next_question' %}" method="post">
+        {% csrf_token %}
+        <div class="question-actions">
+          <button type="submit" class="btn-fe btn-fe--next">次へ</button>
+        </div>
+        <p class="shortcut-hint">Enter で次へ</p>
+      </form>
+    {% endif %}
+  </div>
+  <div class="question-footer">
+    <a href="{% url 'top' %}">トップへ戻る</a>
+  </div>
+  {% if message_type == "danger" and not keep_message %}
+    <script>
+      setTimeout(function () {
+        const message = document.getElementById("message");
+        if (message) {
+          message.remove();
+        }
+      }, 2000);
+    </script>
+  {% endif %}
+  {% if show_next_button %}
+    <script>
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          document.getElementById("next-form").submit();
+        }
+      });
+    </script>
+  {% else %}
+    <script>
+      document.addEventListener("keydown", function (e) {
+        if (e.altKey && e.key.toLowerCase() === "h") {
+          e.preventDefault();
+          const hintButton = document.getElementById("hint-button");
+          if (hintButton) {
+            hintButton.click();
+          }
+        }
+      });
+    </script>
+  {% endif %}
+{% endblock %}

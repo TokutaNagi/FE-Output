@@ -1,0 +1,40 @@
+{% extends "terms/base.html" %}
+{% block title %}新規登録 - FE-Output{% endblock %}
+{% block content %}
+    <h1 class="app-title">
+        <a href="{% url 'top' %}" class="app-title-link">FE-Output</a>
+    </h1>
+    <div class="card-panel">
+        <h2 class="card-panel__heading">新規登録</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger message">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="mb-3 center">{{ form.username }}</div>
+            <div class="mb-3 center">{{ form.password1 }}</div>
+            <div class="mb-4 center">{{ form.password2 }}</div>
+            <div class="top-start">
+                <button type="submit" class="btn-fe btn-fe--wide">登録</button>
+            </div>
+        </form>
+        <hr>
+        <p class="text-center center mb-0">
+            アカウントをお持ちの方は
+            <a href="{% url 'login' %}">ログイン</a>
+        </p>
+        <div class="question-footer">
+            <a href="{% url 'top' %}">トップへ戻る</a>
+        </div>
+    </div>
+{% endblock %}
+```

@@ -1,0 +1,55 @@
+{% extends "terms/base.html" %}
+{% block title %}トップ - FE-Output{% endblock %}
+{% block content %}
+  <div class="page-header">
+    <div class="page-header">
+      <h1 class="app-title">
+        <a href="{% url 'top' %}" class="app-title-link">FE-Output</a>
+      </h1>
+      <a href="{% if user.is_authenticated %}{% url 'mypage' %}{% else %}{% url 'login' %}{% endif %}"
+         class="user-icon">
+        <i class="bi bi-person-fill"></i>
+      </a>
+    </div>
+  </div>
+  <div class="card-panel">
+    <h2 class="card-panel__heading">カテゴリ選択</h2>
+    <form action="{% url 'start' %}" method="get">
+      <ul class="category-list">
+        {% for category in categories %}
+          <li class="category-item">
+            <label for="category{{ category.id }}">{{ category.name }}（{{ category.term_count }}問）</label>
+            <input type="checkbox"
+                   name="categories"
+                   value="{{ category.id }}"
+                   id="category{{ category.id }}">
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="count-select">
+        <label for="count">問題数</label>
+        <select name="count" id="count" class="select">
+          <option>10</option>
+          <option>20</option>
+          <option>30</option>
+        </select>
+      </div>
+      {% if message %}
+        <div class="d-flex justify-content-center mb-3">
+          <div id="message" class="alert alert-{{ message_type }} message mb-0">{{ message }}</div>
+        </div>
+      {% endif %}
+      <div class="top-start">
+        <button type="submit" class="btn-fe btn-fe--wide">開始</button>
+      </div>
+    </form>
+  </div>
+  <script>
+setTimeout(function () {
+    const message = document.getElementById("message");
+    if (message) {
+        message.remove();
+    }
+}, 2000);
+  </script>
+{% endblock %}

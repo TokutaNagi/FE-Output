@@ -1,0 +1,57 @@
+{% extends "terms/base.html" %}
+{% load static %}
+{% block title %}リザルト - FE-Output{% endblock %}
+{% block content %}
+  <h1 class="app-title">FE-Output</h1>
+  <div class="result-summary">
+    <div class="result-row">
+      <span class="pill pill--pink">分野：{{ category_label }}</span>
+      <span class="result-row__colon">:</span>
+      <span class="pill pill--cyan">正答率{{ accuracy }}% {{ correct }}問/{{ total }}問中</span>
+    </div>
+    <div class="result-row">
+      <span class="pill pill--pink">出題数</span>
+      <span class="result-row__colon">:</span>
+      <span class="pill pill--cyan">{{ total }}問（正：{{ correct }} 誤：{{ incorrect }}）</span>
+    </div>
+  </div>
+  <section class="wrong-terms-panel">
+    <div class="wrong-terms-wrapper">
+      <div class="wrong-terms-panel">
+        <h2>
+          <a href="{% url 'mypage' %}" class="wrong-terms-panel__title">間違えた用語集</a>
+        </h2>
+        {% if wrong_details %}
+          <ul class="wrong-terms-list">
+            {% for detail in wrong_details %}
+              <li class="wrong-term-item">
+                {{ detail.index }}問目：{{ detail.term.description }}
+                <p class="wrong-term-item__answer">A, {{ detail.term.word }}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="wrong-terms-empty">間違えた用語はありません。お疲れさまでした！</p>
+        {% endif %}
+      </div>
+      {% if accuracy == 100 %}
+        <img src="{% static 'terms/100img.png' %}"
+             alt=""
+             width="512"
+             height="512"
+             class="wrong-terms-image">
+      {% else %}
+        <img src="{% static 'terms/img2.png' %}"
+             alt=""
+             width="512"
+             height="512"
+             class="wrong-terms-image">
+      {% endif %}
+    </div>
+  </section>
+  <div class="btn-group-fe">
+    <a href="{% url 'top' %}" class="btn-fe btn-fe--wide">トップへ戻る</a>
+    <a href="{% url 'retry' %}"
+       class="btn-fe btn-fe--wide btn-fe--yellow-green">もう一度</a>
+  </div>
+{% endblock %}

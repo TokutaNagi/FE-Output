@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="基本情報技術者試験の用語アウトプット学習アプリ" />
+    <meta name="keywords" content="基本情報技術者試験, FE, アウトプット, 学習" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}FE-Output{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'terms/css/style.css' %}" />
+    <link rel="icon" href="{% static 'terms/favicon.ico' %}">
+    <link rel="icon" href="{% static 'terms/favicon.png' %}">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+    <div class="app">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

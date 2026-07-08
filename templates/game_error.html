@@ -1,0 +1,13 @@
+{% extends "terms/base.html" %}
+{% block title %}エラー - FE-Output{% endblock %}
+{% block content %}
+  <h1 class="app-title">FE-Output</h1>
+  <div class="error-panel">
+    <h2 class="error-panel__title">ゲーム情報がありません</h2>
+    <p class="error-panel__message">
+      セッションの有効期限が切れたか、<br>
+      不正なアクセスが行われました。
+    </p>
+    <a href="{% url 'top' %}" class="btn-fe btn-fe--wide">最初からやり直す</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "terms/base.html" %}
+{% block title %}404 - FE-Output{% endblock %}
+{% block content %}
+  <h1 class="app-title">FE-Output</h1>
+  <div class="error-panel">
+    <p class="error-panel__code">404</p>
+    <h2 class="error-panel__title">ページが見つかりません</h2>
+    <p class="error-panel__message">
+      URLが正しいかご確認ください。
+    </p>
+    <a href="{% url 'top' %}" class="btn-fe btn-fe--wide">トップへ戻る</a>
+  </div>
+{% endblock %}

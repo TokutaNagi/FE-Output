@@ -1,0 +1,17 @@
+{% extends "terms/base.html" %}
+{% block title %}間違えた問題だけ解く - FE-Output{% endblock %}
+{% block content %}
+    <h1 class="app-title">
+        <a href="{% url 'top' %}" class="app-title-link">FE-Output</a>
+    </h1>
+    <div class="card-panel">
+        <h2 class="card-panel__heading">間違えた問題だけ解く</h2>
+        <p class="text-center">間違えたことがある問題を出題します。</p>
+        <div class="top-start">
+            <button class="btn-fe btn-fe--wide">開始</button>
+        </div>
+    </div>
+    <div class="question-footer">
+        <a href="{% url 'mypage' %}">マイページへ戻る</a>
+    </div>
+{% endblock %}

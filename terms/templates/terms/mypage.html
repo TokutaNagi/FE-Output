@@ -1,0 +1,93 @@
+{% extends "terms/base.html" %}
+{% load static %}
+{% block title %}マイページ - FE-Output{% endblock %}
+{% block content %}
+    <h1 class="app-title">
+        <a href="{% url 'top' %}" class="app-title-link">FE-Output</a>
+    </h1>
+    <div class="mypage-card-wrapper">
+        <div class="card-panel mypage-card">
+            <h2 class="card-panel__heading">マイページ</h2>
+            <p class="mb-0">
+                ようこそ、<strong>{{ user.username }}</strong> さん！
+            </p>
+        </div>
+        <img src="{% static 'terms/img2.png' %}"
+             alt="ユーザー"
+             width="512"
+             height="512"
+             class="mypage-user-image">
+    </div>
+    <div class="card-panel mypage-card">
+        <div class="section-header">
+            <h2 class="card-panel__heading">苦手問題ランキング</h2>
+            <a href="{% url 'mistake_quiz' %}" class="btn-fe btn-fe--mis">苦手問題を解く</a>
+        </div>
+        <table class="table table-hover mypage-table mb-0">
+            <thead>
+                <tr>
+                    <th>順位</th>
+                    <th>用語</th>
+                    <th>ミス回数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ranking in rankings %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ ranking.term.word }}</td>
+                        <td>{{ ranking.mistake_count }}回</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">データがありません。</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card-panel mypage-card">
+        <h2 class="card-panel__heading">プレイ履歴</h2>
+        <table class="table table-hover mypage-table mb-0">
+            <thead>
+                <tr>
+                    <th>日時</th>
+                    <th>問題数</th>
+                    <th>正答率</th>
+                    <th>分野</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.created_at|date:"Y/m/d H:i" }}</td>
+                        <td>{{ result.question_count }}問</td>
+                        <td>{{ result.accuracy }}%</td>
+                        <td>
+                            {% if result.categories.exists %}
+                                {% for category in result.categories.all %}
+                                    {{ category.name }}{% if not forloop.last %}・{% endif %}
+                                {% endfor %}
+                            {% else %}
+                                苦手問題
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">プレイ履歴はありません。</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="top-start mt-4">
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-fe btn-fe--logout">ログアウト</button>
+        </form>
+    </div>
+    <div class="question-footer">
+        <a href="{% url 'top' %}">トップへ戻る</a>
+    </div>
+{% endblock %}

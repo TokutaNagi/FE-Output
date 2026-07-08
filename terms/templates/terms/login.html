@@ -1,0 +1,44 @@
+{% extends "terms/base.html" %}
+{% block title %}ログイン - FE-Output{% endblock %}
+{% block content %}
+    <h1 class="app-title">
+        <a href="{% url 'top' %}" class="app-title-link">FE-Output</a>
+    </h1>
+    <div class="card-panel">
+        <h2 class="card-panel__heading">ログイン</h2>
+        {% if message %}
+            <div class="d-flex justify-content-center mb-3">
+                <div class="alert alert-danger message mb-0">{{ message }}</div>
+            </div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="text"
+                   id="username"
+                   name="username"
+                   class="answer-input"
+                   required
+                   autofocus
+                   autocomplete="username"
+                   placeholder="ユーザー名">
+            <input type="password"
+                   id="password"
+                   name="password"
+                   class="answer-input"
+                   required
+                   autocomplete="current-password"
+                   placeholder="パスワード">
+            <div class="top-start">
+                <button type="submit" class="btn-fe btn-fe--wide">ログイン</button>
+            </div>
+        </form>
+        <hr>
+        <p class="text-center center mb-0">
+            アカウントをお持ちでない方は
+            <a href="{% url 'signup' %}">新規登録</a>
+        </p>
+        <div class="question-footer">
+            <a href="{% url 'top' %}">トップへ戻る</a>
+        </div>
+    </div>
+{% endblock %}
