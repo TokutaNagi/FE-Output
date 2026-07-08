@@ -20,6 +20,7 @@
   </div>
   <div class="question-card">
     <p class="question-text">{{ question.description }}</p>
+    <input type="hidden" id="correct-answer" value="{{ question.word }}">
     {% if message %}
       <div id="message"
            class="question-message question-message--{{ message_type }}">{{ message }}</div>

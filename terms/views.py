@@ -448,6 +448,7 @@ def mypage(request):
 
 
 def mistake_quiz(request):
+
     terms = list(
         Term.objects.filter(
             user_stats__user=request.user,
